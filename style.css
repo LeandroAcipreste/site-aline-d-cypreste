@@ -1,0 +1,11 @@
+/* Raiz do CSS. A ordem das camadas vem antes de tudo: a pagina sempre vence o global. */
+@layer global, pagina;
+
+@import url("src/css/reset.css") layer(global);
+@import url("src/css/variables.css") layer(global);
+@import url("src/css/base.css") layer(global);
+@import url("src/css/components/topo.css") layer(global);
+@import url("src/css/components/botoes.css") layer(global);
+@import url("src/css/components/revelar.css") layer(global);
+@import url("src/css/components/efeitos.css") layer(global);
+@import url("src/pages/home/home.css") layer(pagina);

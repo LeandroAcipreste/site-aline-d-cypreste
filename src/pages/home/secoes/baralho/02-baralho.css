@@ -1,0 +1,76 @@
+/* BARALHO CIGANO. Marfim, sobe por cima da hero com o topo arredondado. O retrato escuro fica preso a esquerda
+   enquanto o texto passa; o anel de letras do selo gira com a rolagem. O JS escreve --p (0 a 1 enquanto a dobra
+   atravessa a tela, 02-baralho.js) e .is-aberto nos temas. */
+.baralho {
+  position: relative; z-index: 1;
+  background: var(--marfim); color: var(--tinta);
+  border-radius: clamp(24px, 4vw, 56px) clamp(24px, 4vw, 56px) 0 0;
+  box-shadow: 0 -40px 80px -30px rgb(0 0 0 / .55);
+  padding: clamp(30px, 4.5vw, 56px) var(--margem) clamp(80px, 10vw, 150px);
+}
+
+.baralho__grade {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 8vw, 150px); align-items: start;
+  margin-top: clamp(48px, 7vw, 104px);
+}
+
+.baralho__arte { position: sticky; top: calc(var(--topo-h) + 3svh); }
+.baralho__foto { position: relative; aspect-ratio: .84; max-height: 76svh; overflow: hidden; border-radius: 3px; background: #2b2a20; }
+.baralho__foto img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  filter: saturate(.78);
+  scale: 1.12; translate: 0 calc((var(--p, .5) - .5) * -9%);
+}
+/* entrada da foto: abre de baixo para cima, como uma carta virando */
+html.js .baralho__foto[data-revela] { opacity: 1; translate: none; clip-path: inset(100% 0 0 0); transition: clip-path calc(1.5s * var(--t)) cubic-bezier(.77, 0, .18, 1); }
+html.js .baralho__foto[data-revela].is-in { clip-path: inset(0 0 0 0); }
+
+/* selo: miolo parado e legivel, o anel de letras gira com a rolagem */
+.baralho__selo {
+  position: absolute; right: clamp(-48px, -3vw, -20px); bottom: 14%;
+  width: clamp(124px, 12vw, 168px); aspect-ratio: 1;
+  display: grid; place-items: center;
+  border-radius: 50%; background: var(--ouro); color: var(--tinta);
+  box-shadow: 0 0 0 10px var(--marfim);
+}
+.baralho__anel { position: absolute; inset: 6%; width: 88%; height: 88%; rotate: calc(var(--p, 0) * 160deg); }
+.baralho__anel text { font: 500 9.6px var(--f-texto); letter-spacing: 2.2px; fill: var(--tinta); }
+.baralho__selo-miolo { display: grid; justify-items: center; font: 500 .56rem/1 var(--f-texto); letter-spacing: .2em; text-transform: uppercase; }
+.baralho__selo-miolo em { font: italic 400 clamp(1.9rem, 2.4vw, 2.5rem)/1.05 var(--f-titulo); letter-spacing: -.01em; text-transform: none; }
+
+.baralho__texto { padding-top: clamp(0px, 4vw, 64px); }
+.baralho__titulo {
+  margin: 22px 0 28px;
+  font-size: clamp(2.4rem, 4.2vw, 4.5rem); line-height: 1.06; letter-spacing: -.03em;
+}
+.baralho__titulo em { color: var(--ouro-escuro); }
+.baralho__lead { margin-bottom: 14px; font: italic 400 clamp(1.3rem, 1.8vw, 1.6rem)/1.35 var(--f-titulo); color: var(--tinta); }
+
+/* temas: abrem e fecham com a altura animada (grid 0fr -> 1fr) */
+.temas { margin: 34px 0 10px; max-width: 460px; border-top: 1px solid rgb(34 40 31 / .18); }
+.tema { border-bottom: 1px solid rgb(34 40 31 / .14); }
+.tema__botao {
+  width: 100%; min-height: 60px; display: flex; align-items: center; gap: 18px; text-align: left;
+  font: 400 1.18rem/1.2 var(--f-titulo); color: var(--tinta);
+}
+.tema__num { font: 500 .62rem/1 var(--f-texto); letter-spacing: .2em; color: var(--ouro-escuro); }
+.tema__sinal { position: relative; margin-left: auto; width: 14px; height: 14px; flex: none; }
+.tema__sinal::before, .tema__sinal::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: currentColor; }
+.tema__sinal::after { rotate: 90deg; transition: rotate calc(.5s * var(--t)) var(--ease); }
+.tema.is-aberto .tema__sinal::after { rotate: 0deg; }
+.tema__corpo { display: grid; grid-template-rows: 1fr; transition: grid-template-rows calc(.6s * var(--t)) var(--ease); }
+.tema__corpo > div { overflow: hidden; }
+.tema__corpo p { padding: 0 0 20px 38px; font-size: .92rem; line-height: 1.8; color: var(--tinta-suave); }
+html.js .tema:not(.is-aberto) .tema__corpo { grid-template-rows: 0fr; }
+html.js .tema:not(.is-aberto) .tema__corpo > div { visibility: hidden; transition: visibility 0s calc(.6s * var(--t)); }
+
+.baralho .link-seta { margin-top: 18px; }
+
+@media (max-width: 900px) {
+  .baralho__grade { grid-template-columns: 1fr; }
+  .baralho__arte { position: relative; top: 0; max-width: 560px; }
+  .baralho__foto { aspect-ratio: .9; max-height: 64svh; }
+  .baralho__selo { right: -6px; }
+  .baralho__texto { padding-top: 0; }
+}

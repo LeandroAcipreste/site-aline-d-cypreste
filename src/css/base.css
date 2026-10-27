@@ -1,0 +1,48 @@
+/* P052 Roman e Italic, locais (licenca em assets/fonts/FONT-LICENSE.txt) */
+@font-face { font-family: "Editorial"; src: url("../../assets/fonts/editorial.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Editorial"; src: url("../../assets/fonts/editorial-italic.otf") format("opentype"); font-style: italic; font-display: swap; }
+
+html { background: var(--verde); color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+
+body {
+  background: var(--verde); color: var(--marfim);
+  font: 400 16px/1.6 var(--f-texto);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  /* clip, nunca hidden: hidden vira conteiner de rolagem e mata o sticky da hero e da foto do baralho */
+  overflow-x: clip;
+}
+/* grao de filme fixo, numa camada so dele; no toque sai (mistura em tela cheia pesa no celular) */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  opacity: .07; mix-blend-mode: soft-light;
+}
+@media (pointer: coarse) { body::after { display: none; } }
+
+h1, h2, h3 { font-family: var(--f-titulo); font-weight: 400; }
+em { font-style: italic; }
+::selection { background: var(--ouro); color: var(--verde); }
+:focus-visible { outline: 2px solid var(--ouro); outline-offset: 5px; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pular { position: fixed; left: 16px; top: -80px; z-index: 70; padding: 14px 18px; background: var(--marfim); color: var(--verde); }
+.pular:focus { top: 12px; }
+
+/* barra de leitura no alto da tela: o JS escreve --p (0 a 1) */
+.progresso {
+  position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 50; pointer-events: none;
+  background: var(--ouro); transform-origin: left; transform: scaleX(var(--p, 0));
+}
+
+/* rotulo em caixa alta espacada: o tom de voz da interface */
+.rotulo {
+  display: flex; align-items: center; gap: 14px;
+  font: 500 .68rem/1.6 var(--f-texto); letter-spacing: .24em; text-transform: uppercase;
+  color: var(--ouro-claro);
+}
+.rotulo--escuro { color: var(--ouro-escuro); }
+.rotulo__fio { flex: none; width: 34px; height: 1px; background: currentColor; }

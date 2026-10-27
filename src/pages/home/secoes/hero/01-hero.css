@@ -1,0 +1,114 @@
+/* HERO. Presa no topo (sticky): a dobra do baralho sobe por cima dela.
+   O JS escreve: .is-aberta (abertura do retrato, ao carregar), --p (0 a 1 enquanto o baralho a cobre, 01-hero.js),
+   .is-coberto (coberta de todo: some da renderizacao) e --enc (factory de encaixe, encaixe.js).
+   Tudo que tem altura (fontes, espacos, retrato) multiplica por --enc, para a hero inteira caber na tela, de um
+   desktop baixo a um celular. Larguras com texto nao encolhem. */
+.hero {
+  position: sticky; top: 0; z-index: 0;
+  height: 100svh; min-height: 520px; overflow: hidden;
+  display: flex; align-items: center;
+  padding: calc(var(--topo-h) + 2svh) var(--margem) calc(9svh * var(--enc, 1));
+  background: var(--verde);
+}
+.hero.is-coberto { visibility: hidden; }
+
+/* a orbita: um circulo de fio dourado atras do texto, que da escala sem disputar com o retrato */
+.hero__orbita {
+  position: absolute; z-index: -1; pointer-events: none;
+  width: 118vmax; aspect-ratio: 1; left: -62vmax; top: 18svh;
+  border: 1px solid rgb(198 171 119 / .1); border-radius: 50%;
+}
+
+.hero__grade {
+  width: 100%;
+  display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  gap: clamp(32px, 5vw, 96px); align-items: center;
+}
+
+.hero__texto { position: relative; z-index: 2; translate: 0 calc(var(--p, 0) * -9svh); opacity: calc(1 - var(--p, 0) * 1.2); }
+.hero__titulo {
+  margin: calc(30px * var(--enc, 1)) 0 calc(26px * var(--enc, 1));
+  font-size: calc(clamp(3.1rem, 6.1vw, 6.9rem) * var(--enc, 1)); line-height: 1.02; letter-spacing: -.035em;
+  /* o titulo avanca sobre a coluna do retrato: a assinatura e o arco ficam por baixo dele */
+  margin-right: calc(-1 * clamp(0px, 6vw, 120px));
+}
+.hero__titulo em { color: var(--ouro); }
+.hero__descricao {
+  max-width: 34ch;
+  font-size: max(.88rem, calc(1.05rem * var(--enc, 1))); line-height: 1.75; color: #cfccbe;
+}
+.hero__acoes { display: flex; align-items: center; flex-wrap: wrap; gap: calc(18px * var(--enc, 1)) 32px; margin-top: calc(42px * var(--enc, 1)); }
+.hero__nota { font-size: .8rem; line-height: 1.6; color: var(--marfim); }
+.hero__nota-linha { display: block; font-size: .74rem; color: var(--nevoa); }
+
+/* o retrato: arco de moldura, o fio dourado deslocado atras e a assinatura por cima */
+.hero__retrato {
+  position: relative; justify-self: end;
+  height: calc(min(70svh, 60vw) * var(--enc, 1)); aspect-ratio: .8; max-width: 100%;
+}
+.hero__arco {
+  position: absolute; inset: -18px 20px 22px -20px; z-index: -1;
+  border: 1px solid rgb(198 171 119 / .5); border-radius: 999px 999px 0 0;
+}
+.hero__moldura { position: absolute; inset: 0; overflow: hidden; border-radius: 999px 999px 3px 3px; background: #2b2a20; }
+.hero__moldura img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%;
+  filter: saturate(.8) contrast(1.04);
+  translate: 0 calc(var(--p, 0) * 7%);
+  scale: 1.04;
+}
+.hero__assinatura {
+  position: absolute; left: -26%; bottom: 10%; z-index: 3; white-space: nowrap; pointer-events: none;
+  font: italic 400 calc(clamp(2.4rem, 4.4vw, 4.8rem) * var(--enc, 1))/1 var(--f-titulo); letter-spacing: -.02em;
+  color: var(--marfim); rotate: -6deg;
+  text-shadow: 0 2px 30px rgb(23 28 23 / .65);
+}
+.hero__assinatura em { color: var(--ouro-claro); }
+.hero__brilho {
+  position: absolute; right: -6%; top: 5%; width: calc(64px * var(--enc, 1)); height: calc(64px * var(--enc, 1));
+  color: var(--ouro); rotate: calc(var(--p, 0) * 180deg);
+}
+
+/* convite para rolar: o fio de luz desce, no ritmo de quem vai com calma */
+.hero__desce {
+  position: absolute; left: var(--margem); bottom: calc(26px * var(--enc, 1));
+  display: flex; align-items: center; gap: 16px; min-height: 44px;
+  font: 500 .64rem/1 var(--f-texto); letter-spacing: .24em; text-transform: uppercase; color: var(--nevoa);
+  opacity: calc(1 - var(--p, 0) * 3);
+}
+.hero__desce i { position: relative; width: 1px; height: 36px; overflow: hidden; background: rgb(198 171 119 / .25); }
+.hero__desce i::after {
+  content: ""; position: absolute; left: 0; width: 1px; height: 14px; background: var(--ouro-claro);
+  animation: hero-desce calc(2.4s * var(--t)) var(--ease) infinite;
+}
+@keyframes hero-desce { from { top: -14px; } to { top: 100%; } }
+
+/* ENTRADA (ao carregar): o arco do retrato abre de baixo para cima, a foto assenta, a assinatura e escrita da
+   esquerda para a direita e o fio dourado acende atras */
+html.js .hero__moldura { clip-path: inset(100% 0 0 0); transition: clip-path calc(1.6s * var(--t)) cubic-bezier(.77, 0, .18, 1) calc(.1s * var(--t)); }
+html.js .hero__moldura img { scale: 1.22; transition: scale calc(2.2s * var(--t)) var(--ease) calc(.2s * var(--t)); }
+html.js .hero__arco { opacity: 0; scale: .94; transition: opacity calc(1.4s * var(--t)) var(--ease) calc(.9s * var(--t)), scale calc(1.6s * var(--t)) var(--ease) calc(.9s * var(--t)); }
+html.js .hero__assinatura { clip-path: inset(-20% 100% -20% 0); transition: clip-path calc(1.6s * var(--t)) cubic-bezier(.65, 0, .35, 1) calc(1.1s * var(--t)); }
+html.js .hero__brilho { opacity: 0; scale: .4; transition: opacity calc(1s * var(--t)) var(--ease) calc(1.5s * var(--t)), scale calc(1.4s * var(--t)) var(--ease) calc(1.5s * var(--t)); }
+.hero__titulo { --d: .25; }
+html.js .hero.is-aberta .hero__moldura { clip-path: inset(0 0 0 0); }
+html.js .hero.is-aberta .hero__moldura img { scale: 1.04; }
+html.js .hero.is-aberta .hero__arco { opacity: 1; scale: 1; }
+html.js .hero.is-aberta .hero__assinatura { clip-path: inset(-20% -10% -20% 0); }
+html.js .hero.is-aberta .hero__brilho { opacity: 1; scale: 1; }
+
+/* em pe (celular, tablet em pe): o retrato vai para cima, o texto embaixo */
+@media (max-width: 900px) and (orientation: portrait), (max-width: 640px) {
+  .hero { align-items: flex-end; padding-bottom: calc(11svh * var(--enc, 1)); }
+  .hero__grade { grid-template-columns: 1fr; gap: calc(30px * var(--enc, 1)); }
+  .hero__retrato { order: -1; justify-self: center; height: calc(min(44svh, 104vw) * var(--enc, 1)); }
+  .hero__titulo { font-size: calc(clamp(2.5rem, 11vw, 4.6rem) * var(--enc, 1)); margin: calc(18px * var(--enc, 1)) 0 calc(16px * var(--enc, 1)); margin-right: 0; }
+  .hero__assinatura { left: -20%; bottom: 6%; font-size: calc(clamp(1.9rem, 8.4vw, 3.2rem) * var(--enc, 1)); }
+  .hero__acoes { margin-top: calc(26px * var(--enc, 1)); }
+  .hero__nota { display: none; }
+  .hero__desce { left: auto; right: var(--margem); }
+}
+@media (max-width: 380px) {
+  .hero__descricao { font-size: max(.82rem, calc(.95rem * var(--enc, 1))); }
+  .hero .botao { gap: 20px; padding: 0 20px; }
+}

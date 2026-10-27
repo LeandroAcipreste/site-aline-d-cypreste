@@ -1,0 +1,66 @@
+/* RADIESTESIA. Areia quente. O JS escreve (03-radiestesia.js), pela rolagem:
+     --c  0 a 1 enquanto o titulo chega: as duas linhas vem dos lados opostos e se encontram no centro
+          ("volte ao seu centro") e a onda dourada do ritmo e desenhada embaixo
+     --r  0 a 1 enquanto a foto chega: ela abre de uma capsula estreita, como o balanco do pendulo, ate a moldura inteira
+   Sem JS os dois valem 1: o titulo centrado e a foto aberta. */
+.radiestesia {
+  position: relative; z-index: 1;
+  background: var(--areia); color: var(--tinta);
+  padding: clamp(30px, 4.5vw, 56px) var(--margem) clamp(56px, 7vw, 100px);
+}
+
+.radiestesia__cabeca { margin: clamp(64px, 9vw, 128px) 0 clamp(56px, 7vw, 96px); text-align: center; }
+.radiestesia__titulo {
+  font-size: clamp(2.7rem, 7.4vw, 8.2rem); line-height: 1; letter-spacing: -.04em;
+}
+.radiestesia__linha { display: block; white-space: nowrap; }
+.radiestesia__linha:first-child { translate: calc((1 - var(--c, 1)) * -34vw) 0; }
+.radiestesia__linha:last-child { translate: calc((1 - var(--c, 1)) * 34vw) 0; }
+.radiestesia__linha { opacity: calc(.15 + var(--c, 1) * .85); }
+.radiestesia__titulo em { color: var(--ouro-escuro); }
+.radiestesia__ritmo { width: min(560px, 72%); height: 30px; margin: clamp(22px, 3vw, 36px) auto 0; overflow: visible; }
+.radiestesia__ritmo path { fill: none; stroke: var(--ouro-escuro); stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--c, 1)); }
+.radiestesia__apoio { margin: 22px auto 0; max-width: 38ch; font: italic 400 clamp(1.15rem, 1.6vw, 1.4rem)/1.5 var(--f-titulo); color: var(--tinta-suave); }
+
+.radiestesia__grade {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(36px, 6vw, 110px); align-items: center;
+}
+.radiestesia__imagem {
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #3a2f22;
+  clip-path: inset(calc((1 - var(--r, 1)) * 16%) calc((1 - var(--r, 1)) * 36%) round calc((1 - var(--r, 1)) * 400px + 3px));
+}
+.radiestesia__imagem img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 32% 40%;
+  filter: saturate(.82); scale: calc(1.28 - var(--r, 1) * .24);
+}
+.radiestesia__imagem figcaption {
+  position: absolute; left: 22px; bottom: 20px;
+  font: 500 .62rem/1.5 var(--f-texto); letter-spacing: .22em; text-transform: uppercase; color: var(--marfim);
+  text-shadow: 0 1px 10px rgb(0 0 0 / .7); opacity: var(--r, 1);
+}
+
+.brilho-solto { width: 30px; height: 30px; color: var(--ouro-escuro); }
+.radiestesia__subtitulo { margin: 20px 0 22px; font-size: clamp(1.9rem, 2.8vw, 2.7rem); line-height: 1.14; letter-spacing: -.02em; }
+.radiestesia__subtitulo em { color: var(--ouro-escuro); }
+.passos { margin: 28px 0 8px; max-width: 440px; }
+.passos li { display: flex; gap: 20px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgb(34 40 31 / .16); font-size: .95rem; }
+.passos__num { font: 500 .62rem/1 var(--f-texto); letter-spacing: .2em; color: var(--ouro-escuro); }
+.radiestesia .link-seta { margin-top: 10px; }
+
+/* valores: uma linha so no desktop, separados por brilhos */
+.valores {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 28px;
+  margin-top: clamp(64px, 8vw, 120px); padding-top: 28px; border-top: 1px solid rgb(34 40 31 / .16);
+  font: 500 .66rem/1 var(--f-texto); letter-spacing: .26em; text-transform: uppercase;
+}
+.valores li { display: flex; align-items: center; gap: 28px; }
+.valores li + li::before { content: ""; width: 5px; height: 5px; rotate: 45deg; background: var(--ouro-escuro); }
+
+@media (max-width: 900px) {
+  .radiestesia__grade { grid-template-columns: 1fr; }
+  .radiestesia__linha { white-space: normal; }
+  .valores { justify-content: flex-start; }
+  .valores li + li::before { display: none; }
+  .valores li { flex: 0 0 calc(50% - 14px); }
+}

@@ -1,0 +1,48 @@
+/* RODAPE. O verde da hero volta: o convite grande, o contato e a marca. */
+.rodape {
+  position: relative; z-index: 1;
+  background: var(--verde); color: var(--marfim);
+  padding: clamp(80px, 11vw, 160px) var(--margem) 26px;
+}
+
+.rodape__convite {
+  position: relative; display: block; width: fit-content; max-width: 100%;
+  margin: clamp(26px, 3vw, 40px) 0 clamp(48px, 6vw, 80px);
+  font: 400 clamp(3.4rem, 10.5vw, 11rem)/.94 var(--f-titulo); letter-spacing: -.045em;
+}
+.rodape__convite em { color: var(--ouro); }
+.rodape__seta {
+  position: absolute; right: -.1em; top: .1em; translate: 100% 0;
+  font: 400 .36em/1 var(--f-titulo); color: var(--ouro);
+  transition: translate calc(.7s * var(--t)) var(--ease);
+}
+.rodape__convite:hover .rodape__seta { translate: calc(100% + 12px) -12px; }
+
+.rodape__contato {
+  display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 28px 48px;
+  padding: 32px 0 clamp(56px, 7vw, 96px); border-top: 1px solid rgb(238 233 223 / .14);
+}
+.rodape__legenda { font: 500 .66rem/1.6 var(--f-texto); letter-spacing: .22em; text-transform: uppercase; color: var(--nevoa); }
+.rodape__telefone { display: inline-block; margin-top: 10px; font: 400 clamp(2rem, 3.4vw, 3.2rem)/1 var(--f-titulo); transition: color .4s; }
+.rodape__telefone:hover { color: var(--ouro-claro); }
+
+.rodape__base {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px 36px;
+  padding: 30px 0; border-top: 1px solid rgb(238 233 223 / .14); border-bottom: 1px solid rgb(238 233 223 / .14);
+}
+.rodape__base > p { font-size: .82rem; color: var(--nevoa); }
+.rodape__topo { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font: 500 .64rem/1 var(--f-texto); letter-spacing: .22em; text-transform: uppercase; }
+.rodape__topo > [aria-hidden] { font-size: 1rem; transition: translate .5s var(--ease); }
+.rodape__topo:hover > [aria-hidden] { translate: 0 -4px; }
+
+.rodape__legal {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; margin-top: 20px;
+  font-size: .74rem; color: #7d8274;
+}
+.rodape__legal a:hover { color: var(--ouro-claro); }
+
+@media (max-width: 760px) {
+  .rodape__seta { position: static; display: inline-block; translate: none; margin-top: .2em; }
+  .rodape__convite:hover .rodape__seta { translate: 8px -8px; }
+  .rodape__contato { align-items: flex-start; flex-direction: column; }
+}

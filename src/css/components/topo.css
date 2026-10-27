@@ -1,0 +1,72 @@
+/* TOPO: transparente sobre a hero; depois de rolar ganha o verde com desfoque (.is-rolado, topo.js) para ler
+   sobre as dobras claras. No celular o menu abre num painel (.is-aberto). */
+.topo {
+  position: fixed; inset: 0 0 auto 0; z-index: 40;
+  height: var(--topo-h); padding: 0 var(--margem);
+  display: flex; align-items: center; gap: 32px;
+  color: var(--marfim);
+  transition: background calc(.5s * var(--t)) var(--ease), height calc(.5s * var(--t)) var(--ease), border-color .5s;
+  border-bottom: 1px solid transparent;
+}
+.topo.is-rolado {
+  height: calc(var(--topo-h) - 16px);
+  background: rgb(23 28 23 / .84);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom-color: rgb(238 233 223 / .08);
+}
+
+.marca { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.marca__brilho { width: 22px; height: 22px; color: var(--ouro); }
+.marca__nome { font: 400 1.12rem/1 var(--f-titulo); letter-spacing: .05em; }
+.marca__nome small {
+  display: block; margin-top: 6px;
+  font: 500 .56rem/1 var(--f-texto); letter-spacing: .3em; text-transform: uppercase; color: var(--nevoa);
+}
+
+.topo__nav { display: flex; gap: 36px; margin-left: auto; }
+.topo__nav a {
+  position: relative; padding: 12px 0;
+  font: 500 .7rem/1 var(--f-texto); letter-spacing: .18em; text-transform: uppercase; color: rgb(238 233 223 / .82);
+  transition: color .3s;
+}
+.topo__nav a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: var(--ouro);
+  scale: 0 1; transform-origin: right; transition: scale calc(.6s * var(--t)) var(--ease);
+}
+.topo__nav a:hover { color: var(--marfim); }
+.topo__nav a:hover::after { scale: 1 1; transform-origin: left; }
+
+.topo__cta {
+  display: inline-flex; align-items: center; gap: 14px; min-height: 44px; padding: 0 22px;
+  border: 1px solid rgb(198 171 119 / .55); border-radius: 999px;
+  font: 500 .7rem/1 var(--f-texto); letter-spacing: .18em; text-transform: uppercase;
+  transition: background .4s var(--ease), color .4s var(--ease);
+}
+.topo__cta:hover { background: var(--ouro); color: var(--verde); }
+.topo__menu { display: none; }
+
+@media (max-width: 760px) {
+  .topo { gap: 14px; }
+  .marca__nome { font-size: 1rem; }
+  .topo__cta { margin-left: auto; padding: 0 16px; }
+  .topo__menu {
+    display: grid; place-content: center; gap: 6px; width: 44px; height: 44px;
+  }
+  .topo__menu i { display: block; width: 22px; height: 1px; background: var(--marfim); transition: translate .4s var(--ease), rotate .4s var(--ease); }
+  .topo.is-aberto .topo__menu i:first-of-type { translate: 0 3.5px; rotate: 45deg; }
+  .topo.is-aberto .topo__menu i:last-of-type { translate: 0 -3.5px; rotate: -45deg; }
+  .topo__nav {
+    position: fixed; inset: var(--topo-h) 0 auto 0; margin: 0;
+    flex-direction: column; gap: 0; padding: 8px var(--margem) 28px;
+    background: rgb(23 28 23 / .97); border-bottom: 1px solid rgb(238 233 223 / .08);
+    opacity: 0; visibility: hidden; translate: 0 -8px;
+    transition: opacity .35s var(--ease), translate .35s var(--ease), visibility 0s .35s;
+  }
+  .topo.is-aberto .topo__nav { opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+  .topo__nav a { padding: 18px 0; font: 400 1.6rem/1 var(--f-titulo); letter-spacing: 0; text-transform: none; border-bottom: 1px solid rgb(238 233 223 / .08); }
+  .topo__nav a::after { display: none; }
+}
+@media (max-width: 380px) {
+  .marca__nome small { display: none; }
+  .topo__cta { padding: 0 12px; letter-spacing: .12em; }
+}

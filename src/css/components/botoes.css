@@ -1,0 +1,23 @@
+/* botao cheio (ouro) e link com seta (sublinhado que acende) */
+.botao {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 36px;
+  min-height: 56px; padding: 0 26px;
+  font: 500 .74rem/1 var(--f-texto); letter-spacing: .16em; text-transform: uppercase;
+  transition: background .4s var(--ease), translate .5s var(--ease);
+}
+.botao--ouro { background: var(--ouro); color: var(--verde); }
+.botao--ouro:hover { background: var(--ouro-claro); translate: 0 -3px; }
+.botao__seta { font-size: 1.15rem; line-height: 1; transition: translate .5s var(--ease); }
+.botao:hover .botao__seta { translate: 0 3px; }
+
+.link-seta {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  max-width: 440px; padding: 20px 0;
+  font: 500 .76rem/1 var(--f-texto); letter-spacing: .16em; text-transform: uppercase;
+}
+.link-seta::before, .link-seta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; }
+.link-seta::before { background: currentColor; opacity: .25; }
+.link-seta::after { background: var(--ouro-escuro); scale: 0 1; transform-origin: right; transition: scale calc(.8s * var(--t)) var(--ease); }
+.link-seta:hover::after { scale: 1 1; transform-origin: left; }
+.link-seta > [aria-hidden] { font-size: 1.3rem; transition: translate .5s var(--ease); }
+.link-seta:hover > [aria-hidden] { translate: 4px -4px; }

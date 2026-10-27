@@ -1,0 +1,40 @@
+# ---- material recebido, nao faz parte do site ----
+*.zip
+*.rar
+*.7z
+assets/img/
+LEIA-PRIMEIRO-CLAUDE.md
+
+# ---- dependencias e saidas de build (o site nao tem build) ----
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+.astro/
+
+# ---- hospedagem e ferramentas ----
+.vercel/
+.netlify/
+.claude/
+.vscode/
+.idea/
+*.code-workspace
+
+# ---- variaveis e segredos ----
+.env
+.env.*
+!.env.example
+
+# ---- logs e temporarios ----
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+*.swp
+*~
+
+# ---- sistema operacional ----
+.DS_Store
+Thumbs.db
+desktop.ini

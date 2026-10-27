@@ -1,0 +1,22 @@
+/* Home: uma pasta por dobra, na ordem da pagina */
+@import url("secoes/hero/01-hero.css");
+@import url("secoes/baralho/02-baralho.css");
+@import url("secoes/radiestesia/03-radiestesia.css");
+@import url("secoes/rodape/04-rodape.css");
+
+/* cabecalho de cada dobra clara: numero e assunto a esquerda, a frase da dobra a direita */
+.secao__topo {
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  padding-bottom: 22px; border-bottom: 1px solid rgb(34 40 31 / .16);
+  font: 500 .66rem/1.6 var(--f-texto); letter-spacing: .22em; text-transform: uppercase;
+}
+.secao__topo p:last-child { color: var(--tinta-suave); text-align: right; }
+
+.corpo { font-size: 1rem; line-height: 1.85; color: var(--tinta-suave); max-width: 46ch; }
+.nota { margin-top: 18px; max-width: 40ch; font-size: .8rem; line-height: 1.7; color: var(--tinta-suave); }
+.legenda { margin-top: 18px; font: 500 .64rem/1.6 var(--f-texto); letter-spacing: .22em; text-transform: uppercase; color: var(--tinta-suave); }
+
+@media (max-width: 760px) {
+  .secao__topo { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .secao__topo p:last-child { text-align: left; }
+}
