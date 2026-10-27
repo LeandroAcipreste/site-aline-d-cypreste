@@ -22,9 +22,11 @@
   filter: saturate(.78);
   scale: 1.12; translate: 0 calc((var(--p, .5) - .5) * -9%);
 }
-/* entrada da foto: abre de baixo para cima, como uma carta virando */
-html.js .baralho__foto[data-revela] { opacity: 1; translate: none; clip-path: inset(100% 0 0 0); transition: clip-path calc(1.5s * var(--t)) cubic-bezier(.77, 0, .18, 1); }
-html.js .baralho__foto[data-revela].is-in { clip-path: inset(0 0 0 0); }
+/* entrada da foto: abre de baixo para cima, como uma carta virando. O recorte fica na IMAGEM, nunca na caixa
+   observada: elemento recortado a zero nunca conta como visivel e a foto ficava invisivel para sempre */
+html.js .baralho__foto[data-revela] { opacity: 1; translate: none; }
+html.js .baralho__foto[data-revela] img { clip-path: inset(100% 0 0 0); transition: clip-path calc(1.5s * var(--t)) cubic-bezier(.77, 0, .18, 1); }
+html.js .baralho__foto[data-revela].is-in img { clip-path: inset(0 0 0 0); }
 
 /* selo: miolo parado e legivel, o anel de letras gira com a rolagem */
 .baralho__selo {
