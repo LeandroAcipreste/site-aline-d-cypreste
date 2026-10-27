@@ -12,6 +12,10 @@ const ano = document.querySelector('[data-ano]');
 if (ano) ano.textContent = String(new Date().getFullYear());
 
 const lenis = criarLenis();
+// recarregou (ou voltou do historico com a pagina guardada): comeca na hero
+const paraOTopo = () => { if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0); };
+paraOTopo();
+addEventListener('pageshow', (e) => { if (e.persisted) paraOTopo(); });
 iniciarEfeitos();                    // quebra os textos em letras antes de medir e de qualquer entrada
 iniciarEncaixe(() => window.ScrollTrigger?.refresh());
 iniciarTopo(lenis);

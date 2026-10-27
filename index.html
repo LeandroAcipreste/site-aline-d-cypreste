@@ -7,7 +7,13 @@
 <title>Aline D’Cypreste | Terapeuta integrativa</title>
 <meta name="description" content="Leituras terapêuticas com Baralho Cigano e Radiestesia Terapêutica Integrativa com Aline D’Cypreste. Atendimento online e presencial, com respeito e sigilo.">
 <!-- o estado "fora" das animacoes so existe com JS: sem ele, o conteudo aparece inteiro -->
-<script>document.documentElement.classList.add('js');</script>
+<script>
+  document.documentElement.classList.add('js');
+  // recarregou: volta sempre para a hero (o navegador nao devolve a rolagem antiga nem pula para o #ancora)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+</script>
 <link rel="preload" href="/assets/fonts/editorial.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="/assets/fonts/editorial-italic.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" as="image" href="/assets/images/shared/photo-11.webp" fetchpriority="high">
