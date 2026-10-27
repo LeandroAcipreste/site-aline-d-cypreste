@@ -3,6 +3,7 @@
    espalham, o pendulo balanca para fora). O JS (efeitos.js) quebra o texto e liga/desliga .is-in no proprio
    elemento (revelar.js; na hero, 01-hero.js). Cada unidade espera a sua vez: --atraso, pelo indice --i sobre o
    total --n, espalhado por --s segundos, depois de --d. Sem JS nada fica escondido.
+   Nenhum filtro (desfoque, brilho) em letra: dezenas ao mesmo tempo travavam a rolagem. So opacidade e transform.
 
    Topo        marca: luz | menu: salto | agendar: rastro
    Hero        rotulo: fio | titulo: mascara | texto: desfoque | botao: preenche | nota: deriva | role: queda
@@ -19,8 +20,8 @@
 
 /* ----------------------------- topo ----------------------------- */
 [data-fx="luz"] { --s: .5; }
-html.js [data-fx="luz"] .fx-l { opacity: 0; filter: brightness(3); transition: opacity calc(.7s * var(--t)) ease var(--atraso), filter calc(1.2s * var(--t)) ease var(--atraso); }
-html.js .is-in[data-fx="luz"] .fx-l { opacity: 1; filter: brightness(1); }
+html.js [data-fx="luz"] .fx-l { opacity: 0; scale: 1.25; transition: opacity calc(.7s * var(--t)) ease var(--atraso), scale calc(1.2s * var(--t)) var(--ease) var(--atraso); }
+html.js .is-in[data-fx="luz"] .fx-l { opacity: 1; scale: 1; }
 
 [data-fx="salto"] { --s: .3; }
 html.js [data-fx="salto"] .fx-l { opacity: 0; scale: 1 0; transform-origin: 50% 100%; transition: scale calc(.7s * var(--t)) var(--ease) var(--atraso), opacity calc(.4s * var(--t)) ease var(--atraso); }
@@ -43,8 +44,8 @@ html.js [data-fx="mascara"] .fx-l { translate: 0 112%; transition: translate cal
 html.js .is-in[data-fx="mascara"] .fx-l { translate: 0 0; }
 
 [data-fx="desfoque"] { --s: .45; }
-html.js [data-fx="desfoque"] .fx-p { opacity: 0; filter: blur(10px); translate: 0 .25em; transition: opacity calc(1.2s * var(--t)) ease var(--atraso), filter calc(1.2s * var(--t)) ease var(--atraso), translate calc(1.2s * var(--t)) var(--ease) var(--atraso); }
-html.js .is-in[data-fx="desfoque"] .fx-p { opacity: 1; filter: blur(0); translate: 0 0; }
+html.js [data-fx="desfoque"] .fx-p { opacity: 0; scale: 1.18; translate: 0 .25em; transition: opacity calc(1.2s * var(--t)) ease var(--atraso), scale calc(1.4s * var(--t)) var(--ease) var(--atraso), translate calc(1.2s * var(--t)) var(--ease) var(--atraso); }
+html.js .is-in[data-fx="desfoque"] .fx-p { opacity: 1; scale: 1; translate: 0 0; }
 
 /* preenche: as letras do botao acendem uma a uma, de apagadas para cheias */
 [data-fx="preenche"] { --s: .4; }
@@ -130,14 +131,14 @@ html.js .is-in[data-fx="pendulo"] .fx-l { opacity: 1; rotate: 0deg; }
 html.js [data-fx="centro"] .fx-l {
   --meio: calc(var(--i, 0) / var(--n, 1) - .5);
   --atraso: calc((var(--d, 0) + max(var(--meio), -1 * var(--meio)) * 2 * var(--s)) * 1s * var(--t));
-  opacity: 0; scale: .5; filter: blur(6px);
-  transition: opacity calc(.8s * var(--t)) ease var(--atraso), scale calc(1.2s * var(--t)) var(--ease) var(--atraso), filter calc(1s * var(--t)) ease var(--atraso);
+  opacity: 0; scale: .5;
+  transition: opacity calc(.8s * var(--t)) ease var(--atraso), scale calc(1.2s * var(--t)) var(--ease) var(--atraso);
 }
-html.js .is-in[data-fx="centro"] .fx-l { opacity: 1; scale: 1; filter: blur(0); }
+html.js .is-in[data-fx="centro"] .fx-l { opacity: 1; scale: 1; }
 
 [data-fx="respira"] { --s: .7; }
-html.js [data-fx="respira"] .fx-p { opacity: 0; scale: .82; filter: blur(5px); transition: opacity calc(1.8s * var(--t)) ease var(--atraso), scale calc(1.8s * var(--t)) var(--ease) var(--atraso), filter calc(1.8s * var(--t)) ease var(--atraso); }
-html.js .is-in[data-fx="respira"] .fx-p { opacity: 1; scale: 1; filter: blur(0); }
+html.js [data-fx="respira"] .fx-p { opacity: 0; scale: .82; transition: opacity calc(1.8s * var(--t)) ease var(--atraso), scale calc(1.8s * var(--t)) var(--ease) var(--atraso); }
+html.js .is-in[data-fx="respira"] .fx-p { opacity: 1; scale: 1; }
 
 [data-fx="onda"] { --s: .5; }
 html.js [data-fx="onda"] .fx-l {
@@ -172,11 +173,11 @@ html.js .is-in[data-fx="cresce"] .rotulo__fio { scale: 1 1; }
 
 [data-fx="orbita"] { --s: .5; }
 html.js [data-fx="orbita"] .fx-l {
-  opacity: 0; filter: blur(8px);
+  opacity: 0;
   transform: translate(calc(var(--dx, 0) * .35em), calc(var(--dy, 0) * .35em)) scale(2.4);
-  transition: transform calc(1.6s * var(--t)) var(--ease) var(--atraso), opacity calc(.8s * var(--t)) ease var(--atraso), filter calc(1.2s * var(--t)) ease var(--atraso);
+  transition: transform calc(1.6s * var(--t)) var(--ease) var(--atraso), opacity calc(.8s * var(--t)) ease var(--atraso);
 }
-html.js .is-in[data-fx="orbita"] .fx-l { opacity: 1; filter: blur(0); transform: none; }
+html.js .is-in[data-fx="orbita"] .fx-l { opacity: 1; transform: none; }
 
 [data-fx="pulso"] { --s: .5; }
 html.js [data-fx="pulso"] .fx-l { opacity: 0; scale: 1.8; transition: scale calc(.8s * var(--t)) var(--ease) var(--atraso), opacity calc(.5s * var(--t)) ease var(--atraso); }
@@ -214,8 +215,3 @@ html.js [data-fx="pisca"] .fx-l { opacity: 0; }
 html.js .is-in[data-fx="pisca"] .fx-l { animation: fx-pisca calc(.9s * var(--t)) linear var(--atraso) both; }
 @keyframes fx-pisca { 0% { opacity: 0; } 30% { opacity: 1; } 45% { opacity: .2; } 60% { opacity: .9; } 72% { opacity: .4; } 100% { opacity: 1; } }
 
-/* no toque, sem desfoque nem brilho filtrado em letra (dezenas de filtros ao mesmo tempo pesam no celular);
-   o movimento de cada efeito continua igual */
-@media (pointer: coarse) {
-  html.js [data-fx] :is(.fx-l, .fx-p) { filter: none !important; }
-}

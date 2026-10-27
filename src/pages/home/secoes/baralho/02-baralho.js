@@ -18,5 +18,5 @@ export function iniciarBaralho() {
     });
   }
 
-  progresso(secao, '--p', { start: 'top bottom', end: 'bottom top' });
+  progresso([secao.querySelector('.baralho__foto img'), secao.querySelector('.baralho__anel')], '--p', { trigger: secao, start: 'top bottom', end: 'bottom top' });
 }

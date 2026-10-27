@@ -20,7 +20,8 @@ export function iniciarHero() {
   Promise.race([fontes, new Promise((r) => setTimeout(r, 1200))]).then(abrir);
 
   // o gatilho e o baralho subindo, nunca a propria hero: elemento preso (sticky) engana as medidas do ScrollTrigger
-  progresso(hero, '--p', {
+  const usamP = hero.querySelectorAll('.hero__texto, .hero__moldura img, .hero__brilho, .hero__desce');
+  progresso([...usamP], '--p', {
     trigger: document.querySelector('.baralho'), start: 'top bottom', end: 'top top',
     aoMudar: (p) => {
       hero.classList.toggle('is-coberto', p >= 0.999);

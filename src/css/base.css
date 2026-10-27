@@ -2,6 +2,11 @@
 @font-face { font-family: "Editorial"; src: url("../../assets/fonts/editorial.otf") format("opentype"); font-display: swap; }
 @font-face { font-family: "Editorial"; src: url("../../assets/fonts/editorial-italic.otf") format("opentype"); font-style: italic; font-display: swap; }
 
+/* progresso de rolagem: registradas SEM heranca, para a escrita por quadro nao recalcular as letras de dentro */
+@property --p { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --c { syntax: "<number>"; inherits: false; initial-value: 1; }
+@property --r { syntax: "<number>"; inherits: false; initial-value: 1; }
+
 html { background: var(--verde); color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
@@ -15,11 +20,12 @@ body {
   /* clip, nunca hidden: hidden vira conteiner de rolagem e mata o sticky da hero e da foto do baralho */
   overflow-x: clip;
 }
-/* grao de filme fixo, numa camada so dele; no toque sai (mistura em tela cheia pesa no celular) */
+/* grao de filme fixo, numa camada so dele, SEM modo de mistura (mistura em tela cheia era recomposta a cada
+   quadro de rolagem e travava); no toque sai */
 body::after {
   content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
-  opacity: .07; mix-blend-mode: soft-light;
+  opacity: .035;
 }
 @media (pointer: coarse) { body::after { display: none; } }
 

@@ -1,4 +1,4 @@
-/* TOPO: transparente sobre a hero; depois de rolar ganha o verde com desfoque (.is-rolado, topo.js) para ler
+/* TOPO: transparente sobre a hero; depois de rolar ganha o verde (sem desfoque de vidro: travava a rolagem) (.is-rolado, topo.js) para ler
    sobre as dobras claras. No celular o menu abre num painel (.is-aberto). */
 .topo {
   position: fixed; inset: 0 0 auto 0; z-index: 40;
@@ -10,8 +10,7 @@
 }
 .topo.is-rolado {
   height: calc(var(--topo-h) - 16px);
-  background: rgb(23 28 23 / .84);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  background: rgb(23 28 23 / .95);
   border-bottom-color: rgb(238 233 223 / .08);
 }
 
